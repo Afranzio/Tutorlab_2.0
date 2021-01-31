@@ -1,0 +1,146 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet"href="{%static '/css/pro1.css' %}">
+    <script src="{%static '/javascript/pro1.js' %}" ></script>
+    <title>Tutorlabs</title>
+</head>
+<body>
+    <nav>
+        <div class="logos">
+            <img class="logo" src="{%static 'images/Rectangle 24.png' %}" alt="" />
+            <div class="brand">
+                <img src="{%static 'images/O R K I N S T A.png' %}" alt="">
+                <img src="{%static 'images/WE BUILD ENTREPRENEURS.png' %}" alt="" />
+            </div>
+        </div>
+        <div class="label">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/myclasses">My Classes</a></li>
+                <li><a href="/notification">Reports</a></li>
+                <li><a href="/contactSupport">Contact</a></li>
+                <li><img src="{%static 'images/generic-avatar 3.png' %}" alt="" /></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="main-container">
+        <div class="left-side">
+            <img src="{%static 'images/profile.jpg' %}" alt="" />
+            <h6 class="upload">upload</h6>
+            <div class="center">
+                <h6>
+                    Upload profile for more Students to see your profile
+                </h6>
+            </div>
+        </div>
+        <div class="right-side">
+            <div class="blue title">
+                <h4><strong>PROFILE</strong></h4>
+            </div>
+            <form id="form">
+                <div class="flex">
+                    <div class="form-left">
+                        <div class="form-inputs">
+                            <label for="fn">Firstname</label>
+                            <input type="text" id="fn" placeholder="Firstname" />
+                        </div>
+                        <div class="form-inputs">
+                            <label for="cn">Country</label>
+                            <input type="text" id="cn" placeholder="Country" />
+                        </div>                
+                        <div class="form-inputs">
+                            <label for="ph">Phone</label>
+                            <input type="text" id="ph" placeholder="Phone" />
+                        </div>                
+                        <div class="form-inputs">
+                            <label for="skil">Skills</label>
+                            <input type="text" id="skill" placeholder="Skills" />
+                        </div>
+                    </div>
+                    <div class="form-right">
+                        <div class="form-inputs">
+                            <label for="ln">Lastname</label>
+                            <input type="text" id="ln" placeholder="Lastname" />
+                        </div>
+                        <div class="form-inputs">
+                            <label for="st">State</label>
+                            <input type="text" id="st" placeholder="Select State" />
+                        </div>                
+                        <div class="form-inputs">
+                            <label for="sky">Skype-ID</label>
+                            <input type="text" id="sky" placeholder="Skype-ID" />
+                        </div>                
+                        <div class="form-inputs">
+                            <label for="sky">Year of Experience</label>
+                            <input type="text" id="exp" placeholder="Enter in Number" />
+                        </div>
+                    </div>
+                </div>
+                <div class="buttons">
+                    <input type="submit" value="Save & Next" />
+                    <input type="button" onClick="window.location='/'" value="Cancel" />
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="footer">
+        <ul>
+            <li>Terms and Conditions</li>
+            <li>|</li>
+            <li>Privacy Policy</li>
+            <li>|</li>
+            <li>Help</li>
+            <li>|</li>
+            <li>Tutorlabs Licenses</li>
+            <li>|</li>
+            <li>Partners</li>
+            <li>|</li>
+            <li class="flex">
+                <label for="Lang">Language</label>
+                <h4 id="Lang">English</h4>
+            </li>
+        </ul>
+    </div>
+    <script>
+    var myform = document.getElementById("form")
+
+    myform.addEventListener('submit', function(e){
+        e.preventDefault();
+        var fname = document.getElementById('fn').value
+        var cn = document.getElementById('cn').value
+        var ph = document.getElementById('ph').value
+        var skill = document.getElementById('skill').value
+        var lname = document.getElementById('ln').value
+        var st = document.getElementById('st').value
+        var sky = document.getElementById('sky').value
+        var exp = document.getElementById('exp').value
+        const postData = {
+            "first_name": fname,
+            "last_name": lname,
+            "phone": ph,
+            "address": null,
+            "seek_skills": skill,
+            "teach_skills": null,
+            "country": cn,
+            "level": exp
+        }
+        fetch(`/user/{{usr_id}}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json; charset=UTF-8' },
+            body: JSON.stringify(postData)
+        }).then(function(response) {
+            return response.json();
+        }).then(function(data) {
+            console.log('Created User:', data);
+            window.location = `/pro2/{{usr_id}}`
+        });
+    })
+    </script>
+</body>
+</html>
